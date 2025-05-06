@@ -10,7 +10,7 @@ import Navbar from '../components/Navbar';
 // import API from '../globals/axiosConfig';
 // import accessDriveFiles from '../googleAuths/accessDriveFiles';
 import 'react-toastify/dist/ReactToastify.css';
-import { viewTransaction } from '../utils/viewTransaction';
+// import { viewTransaction } from '../utils/viewTransaction';
 
 
 // Declare the google namespace for TypeScript

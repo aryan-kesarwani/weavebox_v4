@@ -10,7 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { getStoredFiles, StoredFile } from '../utils/fileStorage';
 import Sidebar from '../components/Sidebar';
 import Navbar from '../components/Navbar';
-import { viewTransaction } from '../utils/viewTransaction';
+// import { viewTransaction } from '../utils/viewTransaction';
 
 const Uploads = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
