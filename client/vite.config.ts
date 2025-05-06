@@ -13,7 +13,10 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      globalThis: 'globalThis'  // ensures it stays as native global, not a path
+      globalThis: 'globalThis',  // ensures it stays as native global, not a path
+      'node:fs': 'node-stdlib-browser/mock/empty',
+      'node:fs/promises': 'node-stdlib-browser/mock/empty',
+      'node:path': 'node-stdlib-browser/mock/empty'
     }
   },
   build: {
@@ -21,5 +24,8 @@ export default defineConfig({
     rollupOptions: {
       external: ['mime-types']
     }
+  },
+  optimizeDeps: {
+    exclude: ['pyodide']
   }
 })
