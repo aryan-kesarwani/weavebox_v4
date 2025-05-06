@@ -86,24 +86,24 @@ const Navbar = ({ isSidebarOpen, setIsSidebarOpen, currentPage, fetchTransaction
   };
 
   return (
-    <nav className="fixed w-full bg-white/80 dark:bg-gray-900/80 backdrop-blur-md shadow-md z-50">
+    <nav className="fixed w-full bg-white/80 dark:bg-dark-bg-primary/80 backdrop-blur-md shadow-md z-50">
       <div className="max-w-7xl mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center  h-16">
           <div className="flex items-center">
             <button
               onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-              className="p-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+              className=" absolute left-40 p-2 rounded-lg text-gray-700 dark:text-dark-text-primary hover:bg-gray-100 dark:hover:bg-dark-bg-hover"
             >
               {isSidebarOpen ? <FiChevronLeft size={24} /> : <FiMenu size={24} />}
             </button>
-            <Link to="/dashboard" className="ml-4 text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">
+            <Link to="/dashboard" className="absolute left-2 ml-4 text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-700 to-blue-900">
               WeaveBox
             </Link>
           </div>
           <div className="flex items-center space-x-4">
             <button
               onClick={toggleDarkMode}
-              className="p-3 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+              className="absolute right-40 p-3 rounded-lg bg-gray-200 dark:bg-dark-bg-secondary hover:bg-gray-300 dark:hover:bg-dark-bg-hover transition-colors"
               aria-label="Toggle theme"
             >
               {darkMode ? (
@@ -118,10 +118,10 @@ const Navbar = ({ isSidebarOpen, setIsSidebarOpen, currentPage, fetchTransaction
             </button>
             
             {/* Profile Button - Shows Google user's first name or wallet address */}
-            <div className="relative">
+            <div className="absolute right-3 top-3">
               <button
                 onClick={() => setShowProfileMenu(!showProfileMenu)}
-                className="flex items-center space-x-2 p-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+                className="absolute right-3 flex items-center space-x-2 p-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
               >
                 {googleUser?.picture ? (
                   <img 
@@ -142,7 +142,7 @@ const Navbar = ({ isSidebarOpen, setIsSidebarOpen, currentPage, fetchTransaction
               
               {/* Profile Dropdown Menu */}
               {showProfileMenu && (
-                <div className="absolute right-0 mt-2 w-64 bg-white dark:bg-gray-800 rounded-lg shadow-xl py-2 z-50">
+                <div className="absolute right-2 top-12 mt-2 w-64 bg-white dark:bg-gray-800 rounded-lg shadow-xl py-2 z-50">
                   {googleUser && (
                     <div className="px-4 py-2 border-b border-gray-200 dark:border-gray-700">
                       <p className="text-sm font-medium text-gray-900 dark:text-white">Google Account</p>

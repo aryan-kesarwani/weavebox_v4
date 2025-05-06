@@ -442,8 +442,7 @@ const WeaveBoxLanding: React.FC = () => {
                 <span className="hero-subtitle">Permanent File Storage</span>
               </h1>
               <p className="hero-description">
-                Upload and store your files permanently on Arweave. One-time payment, lifetime storage, with Google
-                Drive integration.
+                Upload and store your files permanently on Arweave. One-time payment, lifetime storage, with Cloud Storage integration.
               </p>
               <div className="hero-buttons">
                 <button className="primary-button" onClick={connectWallet} disabled={isConnecting}>
@@ -876,13 +875,15 @@ const WeaveBoxLanding: React.FC = () => {
           </div>
         </div>
       )}
+      {/* #1343AB --primary-blue
+      #2B04EE --primary-purple */}
 
       {/* CSS Styles */}
       <style dangerouslySetInnerHTML={{ __html: `
         /* Base Styles */
         :root {
-          --primary-blue: #2563eb;
-          --primary-purple: #9333ea;
+          --primary-blue:rgb(19, 67, 171);
+          --primary-purple:rgb(43, 4, 238);
           --gradient: linear-gradient(to right, var(--primary-blue), var(--primary-purple));
           --text-primary: #111827;
           --text-secondary: #4b5563;

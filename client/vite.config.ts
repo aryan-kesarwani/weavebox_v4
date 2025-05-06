@@ -10,6 +10,10 @@ export default defineConfig({
   ],
   define: {
     'process.env': {},
-    global: 'globalThis'
+  },
+  resolve: {
+    alias: {
+      globalThis: 'globalThis'  // ensures it stays as native global, not a path
+    }
   }
 })

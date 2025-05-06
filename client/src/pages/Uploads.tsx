@@ -10,6 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { getStoredFiles, StoredFile } from '../utils/fileStorage';
 import Sidebar from '../components/Sidebar';
 import Navbar from '../components/Navbar';
+import { viewTransaction } from '../utils/viewTransaction';
 
 const Uploads = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -313,7 +314,7 @@ const Uploads = () => {
       <div className={`pt-16 min-h-screen transition-all duration-300 ${isSidebarOpen ? 'ml-[250px]' : 'ml-0'}`}>
         <div className="max-w-7xl mx-auto px-4 py-8">
           <div className="flex flex-col md:flex-row items-center justify-between mb-8">
-            <h1 className="text-3xl font-bold text-center md:text-left bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600 mb-4 md:mb-0">
+            <h1 className="text-3xl font-bold text-center md:text-left bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-blue-800 mb-4 md:mb-0">
               Your Uploads
             </h1>
             <div className="w-full md:w-auto">
@@ -547,7 +548,7 @@ const Uploads = () => {
                               });
                               return;
                             }
-                            window.open(`https://viewblock.io/arweave/tx/${file.txHash}`, '_blank');
+                            window.open(`https://arweave.net/${file.txHash}`, `https://arnode.asia/${file.txHash}`, '_blank');
                             setSelectedFileDetails(null);
                           }}
                           className="w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center"
@@ -716,7 +717,8 @@ const Uploads = () => {
                             });
                             return;
                           }
-                          window.open(`https://viewblock.io/arweave/tx/${file.txHash}`, '_blank');
+                          // window.open(`https://viewblock.io/arweave/tx/${file.txHash}`, '_blank');
+                          window.open(`https://arweave.net/${file.txHash}`, `https://arnode.asia/${file.txHash}`, '_blank');
                         }}
                         className="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 text-sm rounded hover:bg-gray-300 dark:hover:bg-gray-600 flex items-center"
                       >
