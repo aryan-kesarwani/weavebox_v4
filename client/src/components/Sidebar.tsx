@@ -18,7 +18,7 @@ const Sidebar = ({ isSidebarOpen, currentPage }: SidebarProps) => {
     } else {
       // Trigger Google login
       const client = window.google.accounts.oauth2.initTokenClient({
-        client_id: process.env.VITE_GOOGLE_CLIENT_ID,
+        client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
         scope: 'https://www.googleapis.com/auth/drive',
         callback: (response: { access_token: string }) => {
           if (response.access_token) {

@@ -176,7 +176,7 @@ const GoogleDrive = () => {
     try {
       // Initialize Google OAuth2 client for token refresh
       const client = window.google.accounts.oauth2.initTokenClient({
-        client_id: process.env.VITE_GOOGLE_CLIENT_ID,
+        client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
         scope: 'https://www.googleapis.com/auth/drive.readonly https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email',
         callback: async (response: { access_token: string }) => {
           if (response.access_token) {
@@ -215,7 +215,7 @@ const GoogleDrive = () => {
   const handleGoogleSignIn = () => {
     // Initialize Google OAuth2 client
     const client = window.google.accounts.oauth2.initTokenClient({
-      client_id: process.env.VITE_GOOGLE_CLIENT_ID,
+      client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
       scope: 'https://www.googleapis.com/auth/drive.readonly https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email',
       callback: async (response: { access_token: string }) => {
         if (response.access_token) {
