@@ -10,6 +10,8 @@ import Navbar from '../components/Navbar';
 // import API from '../globals/axiosConfig';
 // import accessDriveFiles from '../googleAuths/accessDriveFiles';
 import 'react-toastify/dist/ReactToastify.css';
+// import { viewTransaction } from '../utils/viewTransaction';
+
 
 // Declare the google namespace for TypeScript
 declare global {
@@ -186,14 +188,14 @@ const Dashboard = () => {
       <div className={`pt-16 min-h-screen transition-all duration-300 ${isSidebarOpen ? 'ml-[250px]' : 'ml-0'}`}>
         <div className="max-w-7xl mx-auto px-4 py-8">
           {/* Enhanced Header Section */}
-          <div className="text-center mb-12">
+          {/* <div className="text-center mb-12">
             <h1 className="text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">
               Welcome to WeaveBox
             </h1>
             <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
               Your gateway to permanent, decentralized storage on Arweave.
             </p>
-          </div>
+          </div> */}
           
           {/* Enhanced Upload Options Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-16">
@@ -209,14 +211,14 @@ const Dashboard = () => {
                   <FiUpload size={40} className="text-blue-600 dark:text-blue-400" />
                 </div>
                 <h2 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-white">Upload from Device</h2>
-                <p className="text-gray-600 dark:text-gray-300 mb-8">
+                {/* <p className="text-gray-600 dark:text-gray-300 mb-8">
                   Upload From Local Device.
-                </p>
+                </p> */}
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => navigate('/upload')}
-                  className="w-full px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-shadow duration-300"
+                  className="w-full px-6 py-3 bg-gradient-to-r from-blue-700 to-blue-900 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-shadow duration-300"
                 >
                   Upload Files
                 </motion.button>
@@ -236,14 +238,14 @@ const Dashboard = () => {
                   <FiFolderPlus size={40} className="text-purple-600 dark:text-purple-400" />
                 </div>
                 <h2 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-white">Import from Google Drive</h2>
-                <p className="text-gray-600 dark:text-gray-300 mb-8">
-                  Connect your Google Drive account to import and permanently store your files on Arweave.
-                </p>
+                {/* <p className="text-gray-600 dark:text-gray-300 mb-8">
+                  Upload from Google Drive .
+                </p> */}
                 <motion.button
                   onClick={isGoogleConnected ? () => navigate('/google-drive') : handleGoogleLogin}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="w-full px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-shadow duration-300"
+                  className="w-full px-6 py-3 bg-gradient-to-r from-blue-700 to-blue-900 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-shadow duration-300"
                 >
                   {isGoogleConnected ? 'View Drive' : 'Connect Google Drive'}
                 </motion.button>
@@ -253,7 +255,7 @@ const Dashboard = () => {
 
           {/* Enhanced Recent Files Section */}
           <div className="mt-20 max-w-6xl mx-auto">
-            <div className="flex justify-between items-center mb-8">
+            <div className="flex items-center justify-between mb-8">
               <div className="flex items-center space-x-4">
                 <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Recent Files</h2>
                 <span className="text-sm text-gray-500 dark:text-gray-400 px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-lg">
@@ -526,7 +528,7 @@ const Dashboard = () => {
                         Copy URL
                       </button>
                       <button 
-                        onClick={() => window.open(`https://viewblock.io/arweave/tx/${file.txHash}`, '_blank')}
+                        onClick={() => {window.open(`https://arweave.net/${file.txHash}`, `https://arnode.asia/${file.txHash}`, '_blank')}}
                         className="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 text-sm rounded hover:bg-gray-300 dark:hover:bg-gray-600 flex items-center"
                       >
                         <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">

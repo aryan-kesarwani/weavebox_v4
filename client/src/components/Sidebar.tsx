@@ -37,15 +37,15 @@ const Sidebar = ({ isSidebarOpen, currentPage }: SidebarProps) => {
     <motion.div
       initial={{ width: '250px' }}
       animate={{ width: isSidebarOpen ? '250px' : '0px' }}
-      className="fixed left-0 top-16 h-[calc(100vh-4rem)] bg-white dark:bg-gray-800 shadow-lg z-40 overflow-hidden"
+      className="fixed left-0 top-16 h-[calc(100vh-4rem)] bg-white dark:bg-dark-bg-primary shadow-lg z-40 overflow-hidden"
     >
       <div className="p-4 space-y-4">
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => navigate('/dashboard')}
-          className={`w-full flex items-center space-x-3 p-3 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200 ${
-            currentPage === 'dashboard' ? 'bg-gray-100 dark:bg-gray-700' : ''
+          className={`w-full flex items-center space-x-3 p-3 rounded-lg text-gray-700 dark:text-dark-text-primary hover:bg-gray-100 dark:hover:bg-dark-bg-hover transition-colors duration-200 ${
+            currentPage === 'dashboard' ? 'bg-gray-100 dark:bg-dark-bg-secondary' : ''
           }`}
         >
           <FiUpload size={20} />
@@ -56,8 +56,8 @@ const Sidebar = ({ isSidebarOpen, currentPage }: SidebarProps) => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => navigate('/upload')}
-          className={`w-full flex items-center space-x-3 p-3 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200 ${
-            currentPage === 'upload' ? 'bg-gray-100 dark:bg-gray-700' : ''
+          className={`w-full flex items-center space-x-3 p-3 rounded-lg text-gray-700 dark:text-dark-text-primary hover:bg-gray-100 dark:hover:bg-dark-bg-hover transition-colors duration-200 ${
+            currentPage === 'upload' ? 'bg-gray-100 dark:bg-dark-bg-secondary' : ''
           }`}
         >
           <FiUpload size={20} />
@@ -68,8 +68,8 @@ const Sidebar = ({ isSidebarOpen, currentPage }: SidebarProps) => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => navigate('/uploads')}
-          className={`w-full flex items-center space-x-3 p-3 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200 ${
-            currentPage === 'uploads' ? 'bg-gray-100 dark:bg-gray-700' : ''
+          className={`w-full flex items-center space-x-3 p-3 rounded-lg text-gray-700 dark:text-dark-text-primary hover:bg-gray-100 dark:hover:bg-dark-bg-hover transition-colors duration-200 ${
+            currentPage === 'uploads' ? 'bg-gray-100 dark:bg-dark-bg-secondary' : ''
           }`}
         >
           <FiFolder size={20} />
@@ -80,24 +80,21 @@ const Sidebar = ({ isSidebarOpen, currentPage }: SidebarProps) => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => navigate('/arweavefiles')}
-          className={`w-full flex items-center space-x-3 p-3 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200 ${
-            currentPage === 'arweavefiles' ? 'bg-gray-100 dark:bg-gray-700' : ''
+          className={`w-full flex items-center space-x-3 p-3 rounded-lg text-gray-700 dark:text-dark-text-primary hover:bg-gray-100 dark:hover:bg-dark-bg-hover transition-colors duration-200 ${
+            currentPage === 'arweavefiles' ? 'bg-gray-100 dark:bg-dark-bg-secondary' : ''
           }`}
         >
           <FiGlobe size={20} />
           <span>All Files</span>
         </motion.button>
 
-
-
-
         
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={handleGoogleDriveClick}
-          className={`w-full flex items-center space-x-3 p-3 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200 ${
-            currentPage === 'google-drive' ? 'bg-gray-100 dark:bg-gray-700' : ''
+          className={`w-full flex items-center space-x-3 p-3 rounded-lg text-gray-700 dark:text-dark-text-primary hover:bg-gray-100 dark:hover:bg-dark-bg-hover transition-colors duration-200 ${
+            currentPage === 'google-drive' ? 'bg-gray-100 dark:bg-dark-bg-secondary' : ''
           }`}
         >
           <svg className="w-5 h-5 text-blue-500" viewBox="0 0 87.3 78" xmlns="http://www.w3.org/2000/svg">

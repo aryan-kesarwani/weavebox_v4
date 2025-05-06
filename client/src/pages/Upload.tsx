@@ -192,7 +192,7 @@ const Upload = () => {
               <button
                 onClick={handleUpload}
                 disabled={isUploading}
-                className={`w-full mt-6 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-semibold shadow-lg hover:shadow-xl transition-shadow ${
+                className={`w-full mt-6 px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-800 text-white rounded-lg font-semibold shadow-lg hover:shadow-xl transition-shadow ${
                   isUploading ? 'opacity-50 cursor-not-allowed' : ''
                 }`}
               >
