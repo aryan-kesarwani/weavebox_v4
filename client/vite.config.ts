@@ -17,9 +17,11 @@ export default defineConfig({
     }
   },
   build: {
-    sourcemap: false
-    // rollupOptions: {
-    //   external: ['mime-types']
-    // }
+    sourcemap: true,
+    rollupOptions: {
+      output: {
+        manualChunks: undefined
+      }
+    }
   }
 })
