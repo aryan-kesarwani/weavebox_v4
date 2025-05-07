@@ -13,14 +13,12 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      globalThis: 'globalThis',  // ensures it stays as native global, not a path
-      'mime-types': 'mime-types/browser'
+      globalThis: 'globalThis'  // ensures it stays as native global, not a path
     }
   },
   build: {
     sourcemap: true,
     rollupOptions: {
-      external: ['mime-types'],
       output: {
         manualChunks: undefined,
         format: 'es'
@@ -28,6 +26,6 @@ export default defineConfig({
     }
   },
   optimizeDeps: {
-    include: ['mime-types/browser']
+    include: ['mime-types']
   }
 })
