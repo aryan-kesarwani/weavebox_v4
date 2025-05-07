@@ -138,7 +138,7 @@ const Dashboard = () => {
     try {
       console.log('Fetching config...');
       const config = await getConfig();
-      console.log('Config received:', config);
+      // console.log('Config received:', config);
       
       if (!config.googleClientId) {
         throw new Error('Google Client ID not found in configuration');

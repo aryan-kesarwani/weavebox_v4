@@ -7,7 +7,7 @@ let configCache: Config | null = null;
 
 export const getConfig = async (): Promise<Config> => {
   if (configCache) {
-    console.log('Using cached config:', configCache);
+    console.log('Using cached config');
     return configCache;
   }
 
@@ -21,7 +21,7 @@ export const getConfig = async (): Promise<Config> => {
     }
     
     const config = await response.json();
-    console.log('Received config:', config);
+    // console.log('Received config:', config);
     
     configCache = config as Config;
     return configCache;
