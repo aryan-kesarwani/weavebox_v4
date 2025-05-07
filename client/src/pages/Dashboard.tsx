@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import { getStoredFiles, StoredFile } from '../utils/fileStorage';
 import Sidebar from '../components/Sidebar';
 import Navbar from '../components/Navbar';
+import { getConfig } from '../utils/config';
 // import API from '../globals/axiosConfig';
 // import accessDriveFiles from '../googleAuths/accessDriveFiles';
 import 'react-toastify/dist/ReactToastify.css';
@@ -45,6 +46,8 @@ const Dashboard = () => {
   const [previewModal, setPreviewModal] = useState<number | null>(null);
   // const [files, setFiles] = useState<GoogleDriveFile[]>([]);
   const [isGoogleConnected, setIsGoogleConnected] = useState(false);
+  const [isGoogleScriptLoaded, setIsGoogleScriptLoaded] = useState(false);
+  // const [isConfigLoaded, setIsConfigLoaded] = useState(false);
 
   const navigate = useNavigate();
   const { userAddress} = useArweaveWallet();
@@ -73,6 +76,7 @@ const Dashboard = () => {
     script.src = 'https://accounts.google.com/gsi/client';
     script.async = true;
     script.defer = true;
+    script.onload = () => setIsGoogleScriptLoaded(true);
     document.body.appendChild(script);
 
     return () => {
@@ -122,36 +126,66 @@ const Dashboard = () => {
     setIsGoogleConnected(connected);
   }, []);
 
-  const handleGoogleLogin = () => {
-    // Initialize Google OAuth2 client
-    const client = window.google.accounts.oauth2.initTokenClient({
-      client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
-      scope: 'https://www.googleapis.com/auth/drive',
-      callback: async (response: { access_token: string }) => {
-        console.log('Token', response.access_token);
-        if (response.access_token) {
-          try {
-            // Store the token in localStorage for GoogleDrive page to use
-            localStorage.setItem('google_access_token', response.access_token);
-            
-            // Store the time when token was obtained
-            localStorage.setItem('google_token_timestamp', Date.now().toString());
-            
-            // Set Google user as logged in
-            localStorage.setItem('google_connected', 'true');
-            
-            // Redirect to Google Drive page
-            navigate('/google-drive');
-          } catch (error) {
-            console.error('Error during login:', error);
-            alert('Failed to connect to Google Drive. Please try again.');
-          }
-        }
-      },
-    });
+  const handleGoogleLogin = async () => {
+    console.log('Google login initiated');
+    
+    if (!isGoogleScriptLoaded) {
+      console.log('Google script not loaded yet');
+      toast.error('Please wait while Google sign-in is being initialized...');
+      return;
+    }
 
-    // Request access token
-    client.requestAccessToken();
+    try {
+      console.log('Fetching config...');
+      const config = await getConfig();
+      console.log('Config received:', config);
+      
+      if (!config.googleClientId) {
+        throw new Error('Google Client ID not found in configuration');
+      }
+
+      console.log('Initializing Google OAuth2 client...');
+      // Initialize Google OAuth2 client
+      const client = window.google.accounts.oauth2.initTokenClient({
+        client_id: config.googleClientId,
+        scope: 'https://www.googleapis.com/auth/drive',
+        callback: async (response: { access_token: string }) => {
+          console.log('OAuth callback received:', response);
+          if (response.access_token) {
+            try {
+              // Store the token in localStorage for GoogleDrive page to use
+              localStorage.setItem('google_access_token', response.access_token);
+              
+              // Store the time when token was obtained
+              localStorage.setItem('google_token_timestamp', Date.now().toString());
+              
+              // Set Google user as logged in
+              localStorage.setItem('google_connected', 'true');
+              
+              // Redirect to Google Drive page
+              navigate('/google-drive');
+            } catch (error) {
+              console.error('Error during login:', error);
+              toast.error('Failed to connect to Google Drive. Please try again.');
+            }
+          } else {
+            console.error('No access token received');
+            toast.error('Failed to get access token from Google');
+          }
+        },
+        error_callback: (error: any) => {
+          console.error('OAuth error:', error);
+          toast.error('Google sign-in failed. Please try again.');
+        }
+      });
+
+      console.log('Requesting access token...');
+      // Request access token
+      client.requestAccessToken();
+    } catch (error) {
+      console.error('Error in handleGoogleLogin:', error);
+      toast.error('Failed to initialize Google sign-in. Please try again later.');
+    }
   };
 
   // const handleDisconnectWallet = () => {
