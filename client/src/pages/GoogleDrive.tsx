@@ -17,6 +17,8 @@ import UploadProgressBar from '../components/UploadProgressBar';
 import { getTxns } from '../contracts/getTxns';
 import TransactionSidebar from '../components/TransactionSidebar';
 import path from 'path';
+//get config used for fetching google client id and secret from railway server
+import { getConfig } from '../utils/config';
 
 interface GoogleDriveFile {
   id: string;
@@ -174,9 +176,10 @@ const GoogleDrive = () => {
     setIsRefreshingToken(true);
     
     try {
+      const config = await getConfig();
       // Initialize Google OAuth2 client for token refresh
       const client = window.google.accounts.oauth2.initTokenClient({
-        client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
+        client_id: config.googleClientId,
         scope: 'https://www.googleapis.com/auth/drive.readonly https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email',
         callback: async (response: { access_token: string }) => {
           if (response.access_token) {
@@ -212,10 +215,11 @@ const GoogleDrive = () => {
   };
 
   // Add function to handle new Google sign-in
-  const handleGoogleSignIn = () => {
+  const handleGoogleSignIn = async () => {
+    const config = await getConfig();
     // Initialize Google OAuth2 client
     const client = window.google.accounts.oauth2.initTokenClient({
-      client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
+      client_id: config.googleClientId,
       scope: 'https://www.googleapis.com/auth/drive.readonly https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email',
       callback: async (response: { access_token: string }) => {
         if (response.access_token) {

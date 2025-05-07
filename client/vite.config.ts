@@ -15,5 +15,17 @@ export default defineConfig({
     alias: {
       globalThis: 'globalThis'  // ensures it stays as native global, not a path
     }
+  },
+  build: {
+    sourcemap: true,
+    rollupOptions: {
+      output: {
+        manualChunks: undefined,
+        format: 'es'
+      }
+    }
+  },
+  optimizeDeps: {
+    include: ['mime-types']
   }
 })
