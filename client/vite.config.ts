@@ -19,12 +19,13 @@ export default defineConfig({
       'node:path': 'node-stdlib-browser/mock/empty'
     }
   },
-  build: {
-    sourcemap: false,
-    rollupOptions: {
-      external: ['mime-types']
-    }
-  },
+  //add this back for the arlink deployment
+  // build: {
+  //   sourcemap: false,
+  //   rollupOptions: {
+  //     external: ['mime-types']
+  //   }
+  // },
   optimizeDeps: {
     exclude: ['pyodide']
   }
