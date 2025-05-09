@@ -13,9 +13,10 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      globalThis: 'globalThis'  // ensures it stays as native global, not a path
+      globalThis: 'globalThis'
     }
   },
+
   build: {
     sourcemap: true,
     rollupOptions: {

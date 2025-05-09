@@ -16,9 +16,14 @@ import UploadConfirmationModal from '../components/UploadConfirmationModal';
 import UploadProgressBar from '../components/UploadProgressBar';
 import { getTxns } from '../contracts/getTxns';
 import TransactionSidebar from '../components/TransactionSidebar';
+
+
+import { compressImageData } from '../utils/CompressionService';
+
 import path from 'path';
 //get config used for fetching google client id and secret from railway server
 import { getConfig } from '../utils/config';
+
 
 interface GoogleDriveFile {
   id: string;
@@ -29,6 +34,7 @@ interface GoogleDriveFile {
   size?: string;
   modifiedTime?: string;
   buffer?: Buffer;
+  txHash?: string;
 }
 
 // Add type definitions for electron IPC
@@ -718,6 +724,9 @@ const GoogleDrive = () => {
     try {
       console.log('Starting image compression process...');
       
+      // Close the upload confirmation modal
+      setShowUploadConfirmation(false);
+      
       // Filter only selected image files
       const imageFiles = selectedFilesMetadata.filter(file => 
         (file.mimeType?.startsWith('image/') ||
@@ -725,10 +734,7 @@ const GoogleDrive = () => {
         selectedFiles.has(file.id)
       );
 
-      console.log('Selected image files:', imageFiles);
-
       if (imageFiles.length === 0) {
-        console.log('No images selected for compression');
         toast.info("No images selected to compress", {
           position: "bottom-right",
           autoClose: 3000,
@@ -737,55 +743,80 @@ const GoogleDrive = () => {
         return;
       }
 
-      // Create temporary directory
-      console.log('Creating temporary directory...');
-      const tempDir = await window.electron.ipcRenderer.invoke('create-temp-dir');
-      console.log('Temporary directory created:', tempDir);
+      // Reset progress states
+      setUploadProgress(0);
+      setCurrentFileIndex(0);
+      setCurrentUploadFile('');
+      setUploadComplete(false);
+      setShowUploadProgress(true);
       
+      // Create a copy for tracking progress
+      setUploadingFiles(new Set(imageFiles.map(f => f.id)));
+      
+      // Track success and failures
+      let successCount = 0;
+      let failCount = 0;
+
       // Process each selected image
-      for (const file of imageFiles) {
+      for (let i = 0; i < imageFiles.length; i++) {
+        const file = imageFiles[i];
         try {
-          console.log(`Processing file: ${file.name}`);
-          const inputPath = path.join(tempDir, file.name);
-          const outputPath = path.join(tempDir, `compressed_${file.name}`);
+          console.log(`Processing file ${i + 1}/${imageFiles.length}:`, file.name);
           
-          console.log('Input path:', inputPath);
-          console.log('Output path:', outputPath);
-          
-          // Write the file to temp directory
-          console.log('Writing file to temp directory...');
-          await window.electron.ipcRenderer.invoke('write-file', inputPath, file.buffer);
-          console.log('File written successfully');
-          
-          // Compress the image
-          console.log('Calling compress-image IPC...');
-          const result = await window.electron.ipcRenderer.invoke('compress-image', inputPath, outputPath);
-          console.log('Compression result:', result);
-          
-          if (result.success) {
-            console.log('Compression successful, reading compressed file...');
-            // Read the compressed file
-            const compressedBuffer = await window.electron.ipcRenderer.invoke('read-file', outputPath);
-            console.log('Compressed file read successfully, size:', compressedBuffer.length);
-            
+          setCurrentFileIndex(i + 1);
+          setCurrentUploadFile(file.name);
+          setUploadProgress(10);
+
+          // Fetch the file data from Google Drive
+          const response = await fetch(`https://www.googleapis.com/drive/v3/files/${file.id}?alt=media`, {
+            headers: {
+              'Authorization': `Bearer ${googleToken}`
+            }
+          });
+
+          if (!response.ok) {
+            throw new Error(`Failed to fetch file: ${response.status}`);
+          }
+
+          const blob = await response.blob();
+          const arrayBuffer = await blob.arrayBuffer();
+
+          setUploadProgress(30);
+
+          // Now use arrayBuffer for compression
+          const compressionResult = await compressImageData(
+            arrayBuffer,
+            file.name,
+            100
+          );
+
+          if (compressionResult.success && compressionResult.data) {
+            setUploadProgress(50);
+
             // Create a File object from the compressed buffer
-            const compressedFile = new File([compressedBuffer], file.name, {
+            const compressedFile = new File([compressionResult.data], file.name, {
               type: file.mimeType,
               lastModified: file.modifiedTime ? new Date(file.modifiedTime).getTime() : Date.now()
             });
 
-            console.log('Storing compressed file in IndexedDB...');
             // Store the compressed file in IndexedDB
             const storedFile = await storeFile(compressedFile, userAddress || 'anonymous');
             
             if (storedFile && storedFile.id) {
-              console.log('File stored in IndexedDB successfully');
+              // Update the file status to 'pending' initially
+              await db.files.update(storedFile.id, { status: 'pending' });
+              console.log('File status updated to pending');
+              
+              // Update counters
+              successCount++;
+              console.log('Success count increased to:', successCount);
+
               // Update the file in selectedFilesMetadata
-              const updatedFile = {
+              const updatedFile: GoogleDriveFile = {
                 ...file,
-                buffer: compressedBuffer,
-                size: compressedBuffer.length,
-                txHash: 'pending' // Mark as pending since it's a new compressed version
+                buffer: Buffer.from(compressionResult.data),
+                size: compressionResult.data.byteLength.toString(),
+                txHash: 'pending'
               };
               
               setSelectedFilesMetadata(prev => 
@@ -798,15 +829,35 @@ const GoogleDrive = () => {
                 hideProgressBar: true,
               });
             } else {
-              console.error('Failed to store file in IndexedDB');
               throw new Error('Failed to store compressed file in IndexedDB');
             }
           } else {
-            console.error('Compression failed:', result.error);
-            throw new Error(result.error);
+            throw new Error(compressionResult.error || 'Compression failed');
           }
+
+          setUploadProgress(90);
+          
+          // Remove from uploading set
+          const newUploadingFiles = new Set(uploadingFiles);
+          newUploadingFiles.delete(file.id);
+          setUploadingFiles(newUploadingFiles);
+          
+          // Set progress to 100% for this file
+          setUploadProgress(100);
+          
+          // Small delay to show 100% before moving to next file
+          await new Promise(resolve => setTimeout(resolve, 300));
+
         } catch (error) {
           console.error(`Error compressing ${file.name}:`, error);
+          failCount++;
+          console.log('Failure count increased to:', failCount);
+          
+          // Remove from uploading set even if failed
+          const newUploadingFiles = new Set(uploadingFiles);
+          newUploadingFiles.delete(file.id);
+          setUploadingFiles(newUploadingFiles);
+
           toast.error(`Failed to compress ${file.name}`, {
             position: "bottom-right",
             autoClose: 3000,
@@ -815,12 +866,60 @@ const GoogleDrive = () => {
         }
       }
 
-      console.log('Image compression process completed');
-      toast.success("Image compression completed", {
-        position: "bottom-right",
-        autoClose: 3000,
-        hideProgressBar: true,
-      });
+      // All files processed
+      setUploadComplete(true);
+      
+      console.log('Compression process completed. Success:', successCount, 'Failures:', failCount);
+      
+      // Show completion message with correct counts
+      if (successCount > 0) {
+        toast.success(`Successfully compressed and stored ${successCount} file${successCount !== 1 ? 's' : ''}${failCount > 0 ? ` (${failCount} failed)` : ''}`, {
+          position: "bottom-right",
+          autoClose: 5000,
+        });
+
+        // Start Arweave upload process for compressed files
+        try {
+          // Update all pending files to 'uploading' status
+          const pendingFiles = await db.files.where('status').equals('pending').toArray();
+          for (const file of pendingFiles) {
+            if (file.id) {
+              await db.files.update(file.id, { status: 'uploading' });
+            }
+          }
+
+          await window.arweaveWallet.connect(['ACCESS_PUBLIC_KEY', 'SIGN_TRANSACTION', 'SIGNATURE']);
+          await uploadArweave();
+          toast.success('Compressed files uploaded to Arweave successfully!', {
+            position: "bottom-right",
+            autoClose: 5000,
+          });
+        } catch (error) {
+          console.error('Failed to upload compressed files to Arweave:', error);
+          // Revert status back to 'pending' if upload fails
+          const uploadingFiles = await db.files.where('status').equals('uploading').toArray();
+          for (const file of uploadingFiles) {
+            if (file.id) {
+              await db.files.update(file.id, { status: 'pending' });
+            }
+          }
+          toast.error('Failed to upload compressed files to Arweave', {
+            position: "bottom-right",
+            autoClose: 5000,
+          });
+        }
+      } else {
+        toast.error('Failed to compress and store any files', {
+          position: "bottom-right",
+          autoClose: 5000,
+        });
+      }
+
+      // Clear selection after storage attempt
+      setSelectedFiles(new Set());
+      setSelectedFilesMetadata([]);
+      setSelectionMode(false);
+
     } catch (error) {
       console.error('Error in image compression:', error);
       toast.error("Failed to compress images", {
