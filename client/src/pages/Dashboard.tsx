@@ -171,11 +171,18 @@ const Dashboard = () => {
                 const userInfo = await userInfoResponse.json();
                 console.log('Google user info received:', userInfo);
                 
+                // Ensure we have a valid picture URL
+                let pictureUrl = userInfo.picture;
+                if (pictureUrl) {
+                  // Add size parameter to get a smaller, more reliable image
+                  pictureUrl = pictureUrl.replace(/=s\d+/, '=s96');
+                }
+                
                 // Store user info
                 const googleUserData = {
                   name: userInfo.name,
                   email: userInfo.email,
-                  picture: userInfo.picture || null, // Store null if no picture
+                  picture: pictureUrl,
                   id: userInfo.id,
                   accessToken: response.access_token
                 };

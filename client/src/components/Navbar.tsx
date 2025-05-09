@@ -123,8 +123,8 @@ const Navbar = ({ isSidebarOpen, setIsSidebarOpen, currentPage, fetchTransaction
                 onClick={() => setShowProfileMenu(!showProfileMenu)}
                 className="flex items-center space-x-3 p-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
               >
-                {googleUser?.picture ? (
-                  <div className="w-8 h-8 rounded-full overflow-hidden border-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-700">
+                <div className="w-8 h-8 rounded-full overflow-hidden border-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-700 flex items-center justify-center">
+                  {googleUser?.picture ? (
                     <img 
                       src={googleUser.picture} 
                       alt={googleUser.name || 'Profile'} 
@@ -132,21 +132,18 @@ const Navbar = ({ isSidebarOpen, setIsSidebarOpen, currentPage, fetchTransaction
                       onError={(e) => {
                         // Remove the error handler to prevent infinite loop
                         e.currentTarget.onerror = null;
-                        // Replace with fallback icon
+                        // Hide the image and show the fallback icon
                         e.currentTarget.style.display = 'none';
-                        e.currentTarget.parentElement?.classList.add('flex', 'items-center', 'justify-center');
                         const fallbackIcon = document.createElement('div');
                         fallbackIcon.innerHTML = '<svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>';
                         e.currentTarget.parentElement?.appendChild(fallbackIcon);
                       }}
-                      crossOrigin="anonymous"
+                      referrerPolicy="no-referrer"
                     />
-                  </div>
-                ) : (
-                  <div className="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
+                  ) : (
                     <FiUser size={20} className="text-gray-500 dark:text-gray-400" />
-                  </div>
-                )}
+                  )}
+                </div>
                 <span className="text-sm font-medium">
                   {googleUser?.name 
                     ? googleUser.name.split(' ')[0] 
