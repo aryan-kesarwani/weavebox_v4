@@ -13,12 +13,10 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      globalThis: 'globalThis',  // ensures it stays as native global, not a path
-      'node:fs': 'node-stdlib-browser/mock/empty',
-      'node:fs/promises': 'node-stdlib-browser/mock/empty',
-      'node:path': 'node-stdlib-browser/mock/empty'
+      globalThis: 'globalThis'
     }
   },
+  
   //add this back for the arlink deployment
   // build: {
   //   sourcemap: false,
@@ -26,7 +24,5 @@ export default defineConfig({
   //     external: ['mime-types']
   //   }
   // },
-  optimizeDeps: {
-    exclude: ['pyodide']
-  }
+  
 })
