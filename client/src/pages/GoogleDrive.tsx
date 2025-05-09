@@ -20,7 +20,7 @@ import TransactionSidebar from '../components/TransactionSidebar';
 
 import { compressImageData } from '../utils/CompressionService';
 
-import path from 'path';
+// import path from 'path';
 //get config used for fetching google client id and secret from railway server
 import { getConfig } from '../utils/config';
 
