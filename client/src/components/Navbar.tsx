@@ -92,7 +92,7 @@ const Navbar = ({ isSidebarOpen, setIsSidebarOpen, currentPage, fetchTransaction
           <div className="flex items-center">
             <button
               onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-              className=" absolute left-40 p-2 rounded-lg text-gray-700 dark:text-dark-text-primary hover:bg-gray-100 dark:hover:bg-dark-bg-hover"
+              className="absolute left-40 p-2 rounded-lg text-gray-700 dark:text-dark-text-primary hover:bg-gray-100 dark:hover:bg-dark-bg-hover"
             >
               {isSidebarOpen ? <FiChevronLeft size={24} /> : <FiMenu size={24} />}
             </button>
@@ -100,10 +100,10 @@ const Navbar = ({ isSidebarOpen, setIsSidebarOpen, currentPage, fetchTransaction
               WeaveBox
             </Link>
           </div>
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-4 ml-auto">
             <button
               onClick={toggleDarkMode}
-              className="absolute right-40 p-3 rounded-lg bg-gray-200 dark:bg-dark-bg-secondary hover:bg-gray-300 dark:hover:bg-dark-bg-hover transition-colors"
+              className="p-3 rounded-lg bg-gray-200 dark:bg-dark-bg-secondary hover:bg-gray-300 dark:hover:bg-dark-bg-hover transition-colors"
               aria-label="Toggle theme"
             >
               {darkMode ? (
@@ -117,22 +117,37 @@ const Navbar = ({ isSidebarOpen, setIsSidebarOpen, currentPage, fetchTransaction
               )}
             </button>
             
-            {/* Profile Button - Shows Google user's first name or wallet address */}
-            <div className="absolute right-3 top-3">
+            {/* Profile Button */}
+            <div className="relative">
               <button
                 onClick={() => setShowProfileMenu(!showProfileMenu)}
-                className="absolute right-3 flex items-center space-x-2 p-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+                className="flex items-center space-x-3 p-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
               >
                 {googleUser?.picture ? (
-                  <img 
-                    src={googleUser.picture} 
-                    alt={googleUser.name} 
-                    className="w-7 h-7 rounded-full"
-                  />
+                  <div className="w-8 h-8 rounded-full overflow-hidden border-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-700">
+                    <img 
+                      src={googleUser.picture} 
+                      alt={googleUser.name || 'Profile'} 
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        // Remove the error handler to prevent infinite loop
+                        e.currentTarget.onerror = null;
+                        // Replace with fallback icon
+                        e.currentTarget.style.display = 'none';
+                        e.currentTarget.parentElement?.classList.add('flex', 'items-center', 'justify-center');
+                        const fallbackIcon = document.createElement('div');
+                        fallbackIcon.innerHTML = '<svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>';
+                        e.currentTarget.parentElement?.appendChild(fallbackIcon);
+                      }}
+                      crossOrigin="anonymous"
+                    />
+                  </div>
                 ) : (
-                  <FiUser size={20} />
+                  <div className="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
+                    <FiUser size={20} className="text-gray-500 dark:text-gray-400" />
+                  </div>
                 )}
-                <span className="hidden md:inline">
+                <span className="text-sm font-medium">
                   {googleUser?.name 
                     ? googleUser.name.split(' ')[0] 
                     : userAddress ? userAddress.slice(0, 6) + '...' : 'Connect Wallet'
@@ -142,7 +157,7 @@ const Navbar = ({ isSidebarOpen, setIsSidebarOpen, currentPage, fetchTransaction
               
               {/* Profile Dropdown Menu */}
               {showProfileMenu && (
-                <div className="absolute right-2 top-12 mt-2 w-64 bg-white dark:bg-gray-800 rounded-lg shadow-xl py-2 z-50">
+                <div className="absolute right-0 top-12 mt-2 w-64 bg-white dark:bg-gray-800 rounded-lg shadow-xl py-2 z-50">
                   {googleUser && (
                     <div className="px-4 py-2 border-b border-gray-200 dark:border-gray-700">
                       <p className="text-sm font-medium text-gray-900 dark:text-white">Google Account</p>

@@ -169,29 +169,29 @@ const WeaveBoxLanding: React.FC = () => {
   // Features data
   const features = [
     {
-      title: "Permanent Storage",
-      description: "Files stored forever on the blockchain with no recurring fees or maintenance required.",
-    },
-    {
       title: "Google Drive Integration",
       description: "Import files directly from Google Drive with our seamless integration.",
     },
     {
-      title: "Decentralized Architecture",
-      description: "No central point of failure ensures your data is always accessible.",
+      title: "Permanent Storage",
+      description: "Files stored forever on the blockchain with no recurring fees or maintenance required.",
     },
     {
-      title: "One-time Payment",
-      description: "Pay once, store forever. No subscriptions or hidden fees.",
-    },
-    {
-      title: "End-to-End Encryption",
-      description: "Your files are encrypted before being stored on the blockchain.",
-    },
-    {
-      title: "Unlimited Storage",
-      description: "Store as much data as you need without worrying about space limitations.",
-    },
+      title: "Pay For Only What You Used",
+      description: "Pay once for the storage you have used. With free upload under 100KB.",
+    }
+    // {
+    //   title: "Decentralized Architecture",
+    //   description: "No central point of failure ensures your data is always accessible.",
+    // },
+    // {
+    //   title: "End-to-End Encryption",
+    //   description: "Your files are encrypted before being stored on the blockchain.",
+    // },
+    // {
+    //   title: "Unlimited Storage",
+    //   description: "Store as much data as you need without worrying about space limitations.",
+    // },
   ]
 
   // Comparison data
@@ -229,29 +229,29 @@ const WeaveBoxLanding: React.FC = () => {
   ]
 
   // Testimonials data
-  const testimonials = [
-    {
-      name: "John Doe",
-      role: "Blockchain Developer",
-      initials: "JD",
-      quote:
-        "WeaveBox has revolutionized how I store critical code repositories. The permanent storage gives me peace of mind that my work will never be lost.",
-    },
-    {
-      name: "Sarah Anderson",
-      role: "Digital Artist",
-      initials: "SA",
-      quote:
-        "As an artist, preserving my work is paramount. WeaveBox ensures my creations will be accessible for generations to come.",
-    },
-    {
-      name: "Michael Roberts",
-      role: "Research Scientist",
-      initials: "MR",
-      quote:
-        "Data accessibility and censorship resistance are critical in my field. WeaveBox provides both with a simple, elegant solution.",
-    },
-  ]
+  // const testimonials = [
+  //   {
+  //     name: "John Doe",
+  //     role: "Blockchain Developer",
+  //     initials: "JD",
+  //     quote:
+  //       "WeaveBox has revolutionized how I store critical code repositories. The permanent storage gives me peace of mind that my work will never be lost.",
+  //   },
+  //   {
+  //     name: "Sarah Anderson",
+  //     role: "Digital Artist",
+  //     initials: "SA",
+  //     quote:
+  //       "As an artist, preserving my work is paramount. WeaveBox ensures my creations will be accessible for generations to come.",
+  //   },
+  //   {
+  //     name: "Michael Roberts",
+  //     role: "Research Scientist",
+  //     initials: "MR",
+  //     quote:
+  //       "Data accessibility and censorship resistance are critical in my field. WeaveBox provides both with a simple, elegant solution.",
+  //   },
+  // ]
 
   // Animation classes for elements that fade in on scroll
   useEffect(() => {
@@ -297,9 +297,9 @@ const WeaveBoxLanding: React.FC = () => {
             <a href="#comparison" className="nav-link">
               Comparison
             </a>
-            <a href="#testimonials" className="nav-link">
+            {/* <a href="#testimonials" className="nav-link">
               Testimonials
-            </a>
+            </a> */}
           </nav>
 
           <div className="desktop-actions">
@@ -380,9 +380,9 @@ const WeaveBoxLanding: React.FC = () => {
               <a href="#comparison" className="mobile-nav-link" onClick={() => setIsMenuOpen(false)}>
                 Comparison
               </a>
-              <a href="#testimonials" className="mobile-nav-link" onClick={() => setIsMenuOpen(false)}>
+              {/* <a href="#testimonials" className="mobile-nav-link" onClick={() => setIsMenuOpen(false)}>
                 Testimonials
-              </a>
+              </a> */}
               <div className="mobile-actions">
                 <button
                   className="mobile-sign-in"
@@ -442,7 +442,7 @@ const WeaveBoxLanding: React.FC = () => {
                 <span className="hero-subtitle">Permanent File Storage</span>
               </h1>
               <p className="hero-description">
-                Upload and store your files permanently on Arweave. One-time payment, lifetime storage, with Cloud Storage integration.
+                Upload and store your assets permanently on Arweave. Transfer files from Google Drive to Arweave in Single Click. One-time payment, lifetime storage.
               </p>
               <div className="hero-buttons">
                 <button className="primary-button" onClick={connectWallet} disabled={isConnecting}>
@@ -525,7 +525,7 @@ const WeaveBoxLanding: React.FC = () => {
         <section id="features" className="features-section">
           <div className="section-container">
             <div className="section-header">
-              <h2 className="section-title animate-on-scroll">Key Features</h2>
+              <h2 className="section-title animate-on-scroll">Why WeaveBox?</h2>
               <p className="section-description animate-on-scroll">
                 WeaveBox offers a revolutionary approach to file storage with these powerful features
               </p>
@@ -622,7 +622,7 @@ const WeaveBoxLanding: React.FC = () => {
         </section>
 
         {/* Testimonials Section */}
-        <section id="testimonials" className="testimonials-section">
+        {/* <section id="testimonials" className="testimonials-section">
           <div className="section-container">
             <div className="section-header">
               <h2 className="section-title animate-on-scroll">What Our Users Say</h2>
@@ -678,7 +678,7 @@ const WeaveBoxLanding: React.FC = () => {
               ))}
             </div>
           </div>
-        </section>
+        </section> */}
 
         {/* CTA Section */}
         <section className="cta-section">
@@ -711,7 +711,7 @@ const WeaveBoxLanding: React.FC = () => {
                     </>
                   )}
                 </button>
-                <button className="secondary-button">Contact Sales</button>
+                {/* <button className="secondary-button">Contact Sales</button> */}
               </div>
             </div>
           </div>
@@ -734,12 +734,12 @@ const WeaveBoxLanding: React.FC = () => {
                 blockchain.
               </p>
               <div className="social-links">
-                <a href="#" className="social-link" aria-label="GitHub">
+                <a href="https://github.com/aryan-kesarwani/weavebox_v4" className="social-link" aria-label="GitHub">
                   <svg viewBox="0 0 24 24">
                     <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
                   </svg>
                 </a>
-                <a href="#" className="social-link" aria-label="Twitter">
+                <a href="https://x.com/weavebox_ao" className="social-link" aria-label="Twitter">
                   <svg viewBox="0 0 24 24">
                     <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723 10.054 10.054 0 01-3.127 1.184 4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" />
                   </svg>
@@ -776,9 +776,9 @@ const WeaveBoxLanding: React.FC = () => {
                   </a>
                 </li>
                 <li>
-                  <a href="#testimonials" className="footer-link">
+                  {/* <a href="#testimonials" className="footer-link">
                     Testimonials
-                  </a>
+                  </a> */}
                 </li>
               </ul>
             </div>

@@ -16,13 +16,17 @@ export default defineConfig({
       globalThis: 'globalThis'
     }
   },
-  
-  //add this back for the arlink deployment
-  // build: {
-  //   sourcemap: false,
-  //   rollupOptions: {
-  //     external: ['mime-types']
-  //   }
-  // },
-  
+
+  build: {
+    sourcemap: true,
+    rollupOptions: {
+      output: {
+        manualChunks: undefined,
+        format: 'es'
+      }
+    }
+  },
+  optimizeDeps: {
+    include: ['mime-types']
+  }
 })

@@ -2,6 +2,8 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { FiUpload, FiFolder, FiGlobe } from 'react-icons/fi';
 import { isGoogleConnected } from '../utils/googleAuth';
+//config used for fetching google client id and secret from railway server
+import { getConfig } from '../utils/config';
 
 type SidebarProps = {
   isSidebarOpen: boolean;
@@ -12,13 +14,14 @@ const Sidebar = ({ isSidebarOpen, currentPage }: SidebarProps) => {
   const navigate = useNavigate();
   const connected = isGoogleConnected();
 
-  const handleGoogleDriveClick = () => {
+  const handleGoogleDriveClick = async () => {
+    const config = await getConfig();
     if (connected) {
       navigate('/google-drive');
     } else {
       // Trigger Google login
       const client = window.google.accounts.oauth2.initTokenClient({
-        client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
+        client_id: config.googleClientId,
         scope: 'https://www.googleapis.com/auth/drive',
         callback: (response: { access_token: string }) => {
           if (response.access_token) {
