@@ -802,7 +802,7 @@ const WeaveBoxLanding: React.FC = () => {
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="footer-link">
+                  <a href="https://www.iubenda.com/privacy-policy/74279996" className="footer-link">
                     Privacy Policy
                   </a>
                 </li>
