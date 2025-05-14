@@ -776,9 +776,9 @@ const WeaveBoxLanding: React.FC = () => {
                   </a>
                 </li>
                 <li>
-                  {/* <a href="#testimonials" className="footer-link">
-                    Testimonials
-                  </a> */}
+                  <a href="/privacy-policy" className="footer-link">
+                    Privacy Policy
+                  </a>
                 </li>
               </ul>
             </div>
@@ -801,11 +801,11 @@ const WeaveBoxLanding: React.FC = () => {
                     API
                   </a>
                 </li>
-                <li>
+                {/* <li>
                   <a href="https://www.iubenda.com/privacy-policy/74279996" className="footer-link">
                     Privacy Policy
                   </a>
-                </li>
+                </li> */}
               </ul>
             </div>
 
