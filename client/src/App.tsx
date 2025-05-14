@@ -4,6 +4,7 @@ import Upload from './pages/Upload'
 import Uploads from './pages/Uploads'
 import ArweaveFiles from './pages/ArweaveFiles'
 import GoogleDrive from './pages/GoogleDrive'
+import PrivacyPolicy from './pages/PrivacyPolicy'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
           <Route path="/uploads" element={<Uploads />} />
           <Route path="/arweavefiles" element={<ArweaveFiles />} />
           <Route path="/google-drive" element={<GoogleDrive />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         </Routes>
       </BrowserRouter>
     </>
