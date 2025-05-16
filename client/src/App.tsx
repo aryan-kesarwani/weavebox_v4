@@ -18,7 +18,7 @@ function App() {
           <Route path="/uploads" element={<Uploads />} />
           <Route path="/arweavefiles" element={<ArweaveFiles />} />
           <Route path="/google-drive" element={<GoogleDrive />} />
-          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/privacypolicy" element={<PrivacyPolicy />} />
         </Routes>
       </BrowserRouter>
     </>

@@ -776,7 +776,7 @@ const WeaveBoxLanding: React.FC = () => {
                   </a>
                 </li>
                 <li>
-                  <a href="/privacy-policy" className="footer-link">
+                  <a href="/privacypolicy" className="footer-link">
                     Privacy Policy
                   </a>
                 </li>
